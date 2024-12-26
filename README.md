@@ -57,6 +57,7 @@ The tool accepts these GitHub repository URL formats:
 ### Examples
 
 Download and convert a repository using different formats:
+
 ```bash
 # Using HTTPS URL
 git2txt https://github.com/username/repository
@@ -109,6 +110,60 @@ Size: 4.5 KB
 [File contents here]
 ```
 
+## File Exclusions
+
+You can exclude files and directories using patterns or explicit names:
+
+```bash
+# Exclude files by pattern
+git2txt username/repository --exclude="*.log" --exclude="test/**"
+
+# Exclude using a file containing patterns
+git2txt username/repository --exclude-file=.gitignore
+
+# Combine multiple exclusion methods
+git2txt username/repository --exclude="*.tmp" --exclude-file=.gitignore
+```
+
+### Exclusion File Format
+
+The exclusion file should contain one pattern per line:
+
+```plaintext
+# Ignore all log files
+*.log
+
+# Ignore the entire test directory
+test/**
+
+# Ignore specific files
+TODO.md
+docs/private.txt
+
+# Empty lines and comments are ignored
+```
+
+#### Pattern Matching
+
+The tool supports various glob patterns:
+
+- `*` matches any number of characters except slashes
+- `**` matches any number of characters including slashes
+- `?` matches a single character
+- `[...]` matches a range of characters
+- `!` negates a pattern
+
+Examples:
+
+```bash
+# Exclude all JavaScript files
+--exclude="*.js"
+
+# Exclude test directories anywhere in the tree
+--exclude="**/test"
+
+# Exclude specific file types in specific directories
+--exclude="src/**/*.test.js"
 ## Contributing
 
 Contributions are welcome! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
@@ -116,3 +171,4 @@ Contributions are welcome! Please see our [Contributing Guide](CONTRIBUTING.md) 
 ## License
 
 MIT
+```
